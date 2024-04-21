@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Belajar React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- <script type="text/javascript"> -->
+    <script type="text/babel">
+      const container = document.getElementById("root");
+
+      // untuk Menyiapkan Aplikasi react dibutuhkan ReactDOM.createRoot agar react mengetahui root aplikasi nya dan ReactDOM.createRoot bisa dijalankan dengan memanggil link js yang ada di tag head
+      const root = ReactDOM.createRoot(container);
+      // jika memanggil seperti dibawah <h1> tidak akan di kenali (eror) karena <h1> bukan javascript, melainkan jsx
+      // root.render(<h1>Belajar React Boss 🎂</h1>);
+      // maka dari itu kita butuh compiler(compiler yang bernama babel dengan menambahkan babeljs.io dan jangan lupa <script type="text/javascript"> diubah menjadi <script type="text/babel">) untuk menerjemahkan jsx jadi sintax javascript
+
+      // jadi JSX yang di tuliskan di script react ada beberapa syarat yaitu
+      // 1. selslu mengembalikan 1 elemnt(tidak lebih) ex: <h1>Belajar React Boss 🎂</h1> , jika ingin mengembalikan lebih dari 1 element maka harus dibungkus jadi satu element ex: <input><h1>Belajar React Boss 🎂</h1> <img src="xx"/></>
+      // 2. selalu tutup semua tag, klo di html gak semua di tutup tag nya klo jsx wajib tutup ex: <input></input> tapu bagi html yang tidak punya tutup harus menggunakan self close tag, ex: <img src"xx"/>
+      // 3. untuk atrribute harus menuliskan dengan camelCase klo di html bisa menuliskan onclick tapi di jsx harsu ex: onClick, dan di jsx ada beberapa attribute yang namanya berubah ex: di html menluskan kelas = class,  tapi di jsx berubah menjadi className, contoh penulisan dibawah ini
+
+      // root.render(
+      //     <>
+      //     <h1 className="judul">Belajar React Boss 🎂</h1>
+      //     <img src="https://static.league-world.com/dist/logo/lg.png" widt="50"/>
+      //     <p onClick={e =>{ alert('ok!')}}>Belajar React Demi NextJS, Wkwkwkw</p>
+      //     </>
+      // );
+
+      // berikutnya adalah membuat UI dengan component, pada dasarnya component di react ada lah function, dan penulisan function nya harus diawali huruf Besar, dengan begitu kita bisa menggunakan komponet secara berulang, ex: seperti dibawah ini
+      // function Header(){
+      //     return ( <h1 className="judul">Belajar React Boss 🎂</h1>);
+      // }
+      // function Gambar(){
+      //     return (<img src="https://static.league-world.com/dist/logo/lg.png" widt="50"/>);
+      // }
+      // function Paragraf(){
+      //     return (<p onClick={e =>{ alert('ok!')}}>Belajar React Demi NextJS, Wkwkwkw</p>);
+      // }
+      // function MainPage(){
+      //     return(<>
+      //     <Header/>
+      //     <Gambar/>
+      //     <Paragraf/>
+      //     </>);
+      // }
+      // root.render(
+      //     <MainPage/>
+      // );
+
+      // berikutnya adalah props, kita ingin menampilkan element berulang tapi ingin data yang dihasilkna(ditampilkan) berbeda
+      // function Header(props){
+      //     return ( <h1 className="judul">Belajar React Boss {props.name}🎂</h1>);
+      // }
+      // function Gambar(){
+      //     return (<img src="https://static.league-world.com/dist/logo/lg.png" widt="50"/>);
+      // }
+      // function Paragraf(){
+      //     return (<p onClick={e =>{ alert('ok!')}}>Belajar React Demi NextJS, Wkwkwkw</p>);
+      // }
+      // function MainPage(){
+      //     return(<>
+      //     <Header name="Biar Ganteng"/>
+      //     <Header name="Biar Jelek"/>
+      //     <Gambar/>
+      //     <Paragraf/>
+      //     </>);
+      // }
+      // root.render(
+      //     <MainPage/>
+      // );
+
+      // props refractor, menggunakan destructuring dan ternary operator
+
+      function Header({ author }) {
+        return (
+          <h1 className="judul">
+            Belajar React Boss {author ? author : "biar Ganteng bingits"}🎂
+          </h1>
+        );
+      }
+      function Gambar() {
+        return (
+          <img
+            src="https://static.league-world.com/dist/logo/lg.png"
+            width="50"
+          />
+        );
+      }
+      function Paragraf() {
+        return (
+          <p
+            onClick={(e) => {
+              alert("ok!");
+            }}
+          >
+            Belajar React Demi NextJS, Wkwkwkw
+          </p>
+        );
+      }
+      // function MainPage(){
+      //     return(<>
+      //     <Header />
+      //     <Header author="Biar Jelek"/>
+      //     <Gambar/>
+      //     <Paragraf/>
+      //     </>);
+      // }
+      // root.render(
+      //     <MainPage/>
+      // );
+
+      // melakukan pengulangan fungsi array foreach, filter, map pada case ini menggunakan map, note: key={list} adalah untuk unique value agar dikenali react, dalam case ini menggunakan isi dari list(karena kebetulan semua berbeda value nya, jika kedepanya gunakan lah unique ID)
+      function Perulangan() {
+        const lists = ["bambang", "jono", "mex"];
+        return (
+          <>
+            <ul>
+              {lists.map((list) => (
+                <li key={list}>{list}</li>
+              ))}
+            </ul>
+          </>
+        );
+      }
+
+      // function MainPage(){
+      //     return(<>
+      //     <Header />
+      //     <Header author="Biar Jelek"/>
+      //     <Gambar/>
+      //     <Paragraf/>
+      //     <Perulangan/>
+
+      //     </>);
+      // }
+      // root.render(
+      //     <MainPage/>
+      // );
+
+      // interaksi stae(perubahan) dengan state dan hooks , hooks yang dimaksud ada lah setState() yang mengembalikan nilai array, element pertama pada array nya adalah nilai state nya dan array ke dua adalah function untuk updater nya untuk penulisan nama function nya bebas tapi biasanya diawalai kata 'set' ex: setLikes()
+
+      function Button() {
+        const [likes, setLikes] = React.useState(0);
+
+        function handleClick() {
+          setLikes(likes + 1);
+        }
+        return (
+          <>
+            <button onClick={handleClick}>Like ({likes})</button>
+          </>
+        );
+      }
+      function MainPage() {
+        return (
+          <>
+            <Header />
+            <Header author="Biar Jelek" />
+            <Gambar />
+            <Paragraf />
+            <Perulangan />
+            <Button />
+          </>
+        );
+      }
+      root.render(<MainPage />);
+    </script>
+  </body>
+</html>

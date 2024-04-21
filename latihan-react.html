@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Latihan React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      .row {
+        display: flex; /* Mengaktifkan flexbox */
+        justify-content: center; /* Mengatur konten agar berada di tengah */
+      }
+
+      .row > * {
+        margin: 0 5px; /* Memberi jarak antar elemen */
+      }
+      .col {
+        display: flex; /* Mengaktifkan flexbox */
+        justify-content: center; /* Mengatur konten agar berada di tengah */
+      }
+
+      .col > * {
+        margin: 0 5px; /* Memberi jarak antar elemen */
+        margin-top: 12px; /* Memberi jarak antar elemen */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+
+      function TombolPlusMin({ author, onClick, disabled }) {
+     
+        return <button onClick={onClick} disabled={disabled}>{author ? author : "-"}</button>;
+      }
+
+      function TombolReset({ onClick, disabled }) {
+        return <button onClick={onClick} disabled={disabled}>Reset!</button>;
+      }
+
+      function Text({ value }) {
+        
+        if(value > 10 || value < 0){
+            value = 'done!';
+        }
+        return <p>{ value }</p>;
+      }
+
+      function MainPage() {
+
+        const [param, setParam] = React.useState(0);
+
+        function Increment() {
+            setParam(param + 1);
+            
+        }
+
+        function Decrement() {
+            setParam(param - 1);
+          
+        }
+
+        function Reset() {
+            setParam(0);
+        }
+
+        return (
+          <>
+            <div className="row">
+              <TombolPlusMin onClick={Decrement}  disabled={param < 0}/>
+              <Text value={param}/>
+              <TombolPlusMin author="+" onClick={Increment} disabled={param > 10}/>
+            </div>
+
+            <div className="col">
+              <TombolReset onClick={Reset} disabled={param <0 || param >10}/>
+            </div>
+          </>
+        );
+      }
+
+      root.render(<MainPage />);
+    </script>
+  </body>
+</html>
